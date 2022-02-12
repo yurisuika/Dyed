@@ -61,8 +61,8 @@ public class DyedHorseArmorFeatureRenderer extends FeatureRenderer<HorseEntity, 
     }
 
     private Identifier getHorseArmorTexture(HorseArmorItem name, @Nullable String overlay) {
-        String type = StringUtils.remove(String.valueOf(name), "_horse_armor");
-        String string = "textures/entity/horse/armor/horse_armor_" + type + (overlay == null ? "" : "_" + overlay) + ".png";
+        String type = StringUtils.remove(String.valueOf(name.getEntityTexture()), ".png");
+        String string = type + (overlay == null ? "" : "_" + overlay) + ".png";
         return HORSE_ARMOR_TEXTURE_CACHE.computeIfAbsent(string, Identifier::new);
     }
 
