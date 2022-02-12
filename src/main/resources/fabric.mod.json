@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "dyed",
+  "version": "${version}",
+
+  "name": "Dyed",
+  "description": "Properly dyed horse armor!",
+  "authors": [
+    "yurisuika"
+  ],
+  "contributors": [
+  ],
+  "contact": {
+    "homepage": "https://suikacraft.com",
+    "sources": "https://github.com/yurisuika/Dyed"
+  },
+
+  "license": "GNU General Public License 3.0",
+  "icon": "assets/dyed/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.yurisuika.dyed.Dyed"
+    ]
+  },
+  "mixins": [
+    "dyed.mixins.json"
+  ],
+
+  "accessWidener" : "dyed.accesswidener",
+
+  "depends": {
+    "fabricloader": ">=0.11.6",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
