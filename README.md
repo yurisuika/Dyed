@@ -26,18 +26,6 @@ cd ./dyed
 
 Afterwards, your compiled JAR will be in `./build/libs`.
 
-### Released Builds
-
-While you can compile from source, you can always download the latest releases right off of GitHub. Either click the links below or check the releases tab.
-
-#### Latest Builds
-
-Stable releases of Dyed ready to be consumed by the public!
-
-##### 1.18 - [*`1.0.0`*](https://github.com/yurisuika/Dyed/releases/download/1.0.2/dyed-1.18.1-1.0.0.jar)
-
-For Fabric 1.18.1!
-
 ---
 
 ## <p align="center">LINKS</p>
@@ -45,10 +33,6 @@ For Fabric 1.18.1!
 #### Dependencies
 
 Dyed requires *[Fabric API](https://www.modrinth.com/mod/fabric-api)* as a dependency!
-
-#### Servers
-
-Join *`play.suikacraft.com`* to play on SuikaCraft today!
 
 #### Community
 
