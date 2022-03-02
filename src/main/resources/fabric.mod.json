@@ -12,16 +12,16 @@
   ],
   "contact": {
     "homepage": "https://suikacraft.com",
-    "sources": "https://github.com/yurisuika/Dyed"
+    "sources": "https://github.com/yurisuika/Dyed",
+    "issues": "https://github.com/yurisuika/Dyed/issues"
   },
 
   "license": "GNU General Public License 3.0",
   "icon": "assets/dyed/icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
-      "com.yurisuika.dyed.Dyed"
     ]
   },
   "mixins": [
@@ -32,7 +32,6 @@
 
   "depends": {
     "fabricloader": ">=0.11.6",
-    "fabric": "*",
     "minecraft": "1.18.x",
     "java": ">=17"
   },
