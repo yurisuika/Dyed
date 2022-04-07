@@ -18,6 +18,14 @@ cd ./dyed
 
 Afterwards, your compiled JAR will be in `./build/libs`.
 
+#### Releases
+
+Don't want to bother building from source? Get the releases *[right here](https://github.com/yurisuika/Dyed/releases)* now!
+
+#### Repositories
+
+You can find Dyed on both *[CurseForge](https://www.curseforge.com/minecraft/mc-mods/dyed)* and *[Modrinth](https://modrinth.com/mod/dyed)*!
+
 #### Community
 
 The one and only! Join the *[SuikaCraft Discord](https://discord.gg/0zdNEkQle7Qg9C1H)* for the latest discussion on our server, resource pack, mods, or just to chat!
