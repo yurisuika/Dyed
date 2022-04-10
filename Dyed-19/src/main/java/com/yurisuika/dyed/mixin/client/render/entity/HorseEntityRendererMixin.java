@@ -11,21 +11,15 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HorseEntityRenderer.class)
 public class HorseEntityRendererMixin {
 
-    private EntityRendererFactory.Context newContext;
-
-    @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/HorseEntityRenderer;addFeature(Lnet/minecraft/client/render/entity/feature/FeatureRenderer;)Z", ordinal = 0))
-    private void injectInit(EntityRendererFactory.Context context, CallbackInfo ci) {
-        newContext = context;
-    }
-
-    @ModifyArg(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/HorseEntityRenderer;addFeature(Lnet/minecraft/client/render/entity/feature/FeatureRenderer;)Z", ordinal = 1), index = 0)
-    private FeatureRenderer modifyHorseArmorFeatureRenderer(FeatureRenderer renderer) {
-        return new DyedHorseArmorFeatureRenderer((FeatureRendererContext<HorseEntity, HorseEntityModel<HorseEntity>>) this, newContext.getModelLoader());
+    @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/HorseEntityRenderer;addFeature(Lnet/minecraft/client/render/entity/feature/FeatureRenderer;)Z", ordinal = 1))
+    private boolean redirectFeature(HorseEntityRenderer instance, FeatureRenderer featureRenderer, EntityRendererFactory.Context context) {
+        return instance.addFeature(new DyedHorseArmorFeatureRenderer((FeatureRendererContext<HorseEntity, HorseEntityModel<HorseEntity>>) this, context.getModelLoader()));
     }
 
 }
