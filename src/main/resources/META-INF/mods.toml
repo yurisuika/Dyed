@@ -1,0 +1,12 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+license="GNU General Public License 3.0"
+[[mods]]
+modId="dyed"
+version="${file.jarVersion}"
+displayName="Dyed"
+logoFile="dyed.png"
+authors="yurisuika"
+description='''
+Properly dyed horse armor!
+'''
