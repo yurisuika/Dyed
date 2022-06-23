@@ -9,8 +9,6 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.client.render.entity.model.HorseEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.passive.HorseEntity;
@@ -23,13 +21,12 @@ import java.util.Map;
 
 @Environment(EnvType.CLIENT)
 public class DyedHorseArmorFeatureRenderer extends FeatureRenderer<HorseEntity, HorseEntityModel<HorseEntity>> {
-    private final HorseEntityModel<HorseEntity> model;
+    private final HorseEntityModel<HorseEntity> model = new HorseEntityModel(0.1F);
 
     private static final Map<String, Identifier> HORSE_ARMOR_TEXTURE_CACHE = Maps.newHashMap();
 
-    public DyedHorseArmorFeatureRenderer(FeatureRendererContext<HorseEntity, HorseEntityModel<HorseEntity>> context, EntityModelLoader loader) {
-        super(context);
-        this.model = new HorseEntityModel(loader.getModelPart(EntityModelLayers.HORSE_ARMOR));
+    public DyedHorseArmorFeatureRenderer(FeatureRendererContext<HorseEntity, HorseEntityModel<HorseEntity>> featureRendererContext) {
+        super(featureRendererContext);
     }
 
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, HorseEntity horseEntity, float f, float g, float h, float j, float k, float l) {
@@ -38,7 +35,8 @@ public class DyedHorseArmorFeatureRenderer extends FeatureRenderer<HorseEntity, 
 
     private void renderHorseArmor(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, HorseEntity horseEntity, float f, float g, float h, float j, float k, float l) {
         ItemStack itemStack = horseEntity.getArmorType();
-        if (itemStack.getItem() instanceof HorseArmorItem horseArmorItem) {
+        if (itemStack.getItem() instanceof HorseArmorItem) {
+            HorseArmorItem horseArmorItem = (HorseArmorItem)itemStack.getItem();
             this.getContextModel().copyStateTo(this.model);
             this.model.animateModel(horseEntity, f, g, h);
             this.model.setAngles(horseEntity, f, g, j, k, l);
