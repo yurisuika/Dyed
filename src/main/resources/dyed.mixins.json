@@ -6,7 +6,7 @@
   "mixins": [
   ],
   "client": [
-    "client.render.entity.HorseEntityRendererMixin"
+    "client.render.entity.feature.HorseArmorFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
