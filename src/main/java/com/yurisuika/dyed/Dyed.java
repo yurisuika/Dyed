@@ -8,19 +8,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod("dyed")
-public class Dyed
-{
+public class Dyed {
+
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public Dyed()
-    {
+    public Dyed() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
+    private void setup(final FMLCommonSetupEvent event) {
         LOGGER.info("Loading Dyed!");
     }
 
