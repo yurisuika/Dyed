@@ -23,6 +23,7 @@ import java.util.Map;
 
 @Mixin(HorseArmorFeatureRenderer.class)
 public class HorseArmorFeatureRendererMixin {
+    
     private static final Map<String, Identifier> HORSE_ARMOR_TEXTURE_CACHE = Maps.newHashMap();
 
     @Inject(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/HorseEntity;FFFFFF)V", at = @At("TAIL"))
