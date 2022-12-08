@@ -26,6 +26,7 @@ import java.util.Map;
 @OnlyIn(Dist.CLIENT)
 @Mixin(HorseArmorLayer.class)
 public class HorseArmorLayerMixin {
+
     private static final Map<String, ResourceLocation> HORSE_ARMOR_TEXTURE_CACHE = Maps.newHashMap();
 
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/animal/horse/Horse;FFFFFF)V", at = @At("TAIL"))
