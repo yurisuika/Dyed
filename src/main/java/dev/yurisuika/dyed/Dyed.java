@@ -1,4 +1,4 @@
-package com.yurisuika.dyed;
+package dev.yurisuika.dyed;
 
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;

@@ -1,4 +1,4 @@
-package com.yurisuika.dyed.mixin.client.renderer.entity.layers;
+package dev.yurisuika.dyed.mixin.client.renderer.entity.layers;
 
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
