@@ -1,4 +1,4 @@
-package com.yurisuika.dyed.mixin.client.render.entity.feature;
+package dev.yurisuika.dyed.mixin.client.render.entity.feature;
 
 import com.google.common.collect.Maps;
 import net.minecraft.client.render.OverlayTexture;
