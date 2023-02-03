@@ -8,7 +8,7 @@ version= " ${file.jarVersion}"
 displayName = "Dyed"
 displayURL = "https://github.com/yurisuika/Dyed"
 issueTrackerURL = "https://github.com/yurisuika/Dyed/issues"
-logoFile = "assets/dyed/icon.png"
+logoFile = "icon.png"
 authors = "yurisuika"
 description = '''
 Properly dyed horse armor!
