@@ -31,9 +31,9 @@ public class HorseArmorFeatureRendererMixin {
         ItemStack itemStack = entity.getArmorType();
         if (itemStack.getItem() instanceof HorseArmorItem) {
             HorseArmorItem horseArmorItem = (HorseArmorItem)itemStack.getItem();
-            ((HorseArmorFeatureRenderer)(Object)this).getContextModel().copyStateTo(HorseArmorFeatureRendererAccessor.getModel());
-            HorseArmorFeatureRendererAccessor.getModel().animateModel(entity, limbAngle, limbDistance, tickDelta);
-            HorseArmorFeatureRendererAccessor.getModel().setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
+            ((HorseArmorFeatureRenderer)(Object)this).getContextModel().copyStateTo(((HorseArmorFeatureRendererAccessor)this).getModel());
+            ((HorseArmorFeatureRendererAccessor)this).getModel().animateModel(entity, limbAngle, limbDistance, tickDelta);
+            ((HorseArmorFeatureRendererAccessor)this).getModel().setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
             if (horseArmorItem instanceof DyeableHorseArmorItem) {
                 int i = ((DyeableHorseArmorItem)horseArmorItem).getColor(itemStack);
                 float n = (float)(i >> 16 & 255) / 255.0F;
@@ -49,7 +49,7 @@ public class HorseArmorFeatureRendererMixin {
 
     private void renderHorseArmorParts(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, HorseArmorItem name, float red, float green, float blue, @Nullable String overlay) {
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(this.getHorseArmorTexture(name, overlay)));
-        HorseArmorFeatureRendererAccessor.getModel().render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue, 1.0F);
+        ((HorseArmorFeatureRendererAccessor)this).getModel().render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue, 1.0F);
     }
 
     private Identifier getHorseArmorTexture(HorseArmorItem name, @Nullable String overlay) {
