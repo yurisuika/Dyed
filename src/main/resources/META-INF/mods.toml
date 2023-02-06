@@ -4,7 +4,7 @@ license = "GNU Lesser General Public License v3.0"
 
 [[mods]]
 modId = "dyed"
-version= " ${file.jarVersion}"
+version= " ${version}"
 displayName = "Dyed"
 displayURL = "https://github.com/yurisuika/Dyed"
 issueTrackerURL = "https://github.com/yurisuika/Dyed/issues"
