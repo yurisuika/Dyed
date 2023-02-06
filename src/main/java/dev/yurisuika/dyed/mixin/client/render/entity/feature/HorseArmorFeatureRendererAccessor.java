@@ -10,8 +10,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface HorseArmorFeatureRendererAccessor {
 
     @Accessor
-    static HorseEntityModel<HorseEntity> getModel() {
-        throw new AssertionError();
-    }
+    HorseEntityModel<HorseEntity> getModel();
 
 }
