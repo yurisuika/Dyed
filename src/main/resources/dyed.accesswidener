@@ -1,4 +1,1 @@
 accessWidener v1 named
-
-accessible    method    net/minecraft/client/render/entity/LivingEntityRenderer    addFeature    (Lnet/minecraft/client/render/entity/feature/FeatureRenderer;)Z
-accessible    field    net/minecraft/client/render/entity/feature/HorseArmorFeatureRenderer    model    Lnet/minecraft/client/render/entity/model/HorseEntityModel;

@@ -30,9 +30,9 @@ public class HorseArmorFeatureRendererMixin {
     public void injectRender(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, HorseEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch, CallbackInfo ci) {
         ItemStack itemStack = entity.getArmorType();
         if (itemStack.getItem() instanceof HorseArmorItem horseArmorItem) {
-            ((HorseArmorFeatureRenderer)(Object)this).getContextModel().copyStateTo(((HorseArmorFeatureRenderer)(Object)this).model);
-            ((HorseArmorFeatureRenderer)(Object)this).model.animateModel(entity, limbAngle, limbDistance, tickDelta);
-            ((HorseArmorFeatureRenderer)(Object)this).model.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
+            ((HorseArmorFeatureRenderer)(Object)this).getContextModel().copyStateTo((HorseArmorFeatureRendererAccessor.getModel()));
+            HorseArmorFeatureRendererAccessor.getModel().animateModel(entity, limbAngle, limbDistance, tickDelta);
+            HorseArmorFeatureRendererAccessor.getModel().setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
             if (horseArmorItem instanceof DyeableHorseArmorItem) {
                 int i = ((DyeableHorseArmorItem)horseArmorItem).getColor(itemStack);
                 float n = (float)(i >> 16 & 255) / 255.0F;
@@ -48,7 +48,7 @@ public class HorseArmorFeatureRendererMixin {
 
     private void renderHorseArmorParts(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, HorseArmorItem name, float red, float green, float blue, @Nullable String overlay) {
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(this.getHorseArmorTexture(name, overlay)));
-        ((HorseArmorFeatureRenderer)(Object)this).model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue, 1.0F);
+        HorseArmorFeatureRendererAccessor.getModel().render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue, 1.0F);
     }
 
     private Identifier getHorseArmorTexture(HorseArmorItem name, @Nullable String overlay) {
