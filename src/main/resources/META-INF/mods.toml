@@ -17,7 +17,7 @@ Properly dyed horse armor!
 [[dependencies.dyed]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.19.3,1.20)"
+versionRange="[1.19,1.20)"
 ordering="NONE"
 side="CLIENT"
 
