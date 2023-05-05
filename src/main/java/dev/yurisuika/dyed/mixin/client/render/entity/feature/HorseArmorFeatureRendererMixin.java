@@ -3,7 +3,6 @@ package dev.yurisuika.dyed.mixin.client.render.entity.feature;
 import com.google.common.collect.Maps;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.HorseArmorFeatureRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -47,14 +46,11 @@ public class HorseArmorFeatureRendererMixin {
     }
 
     private void renderHorseArmorParts(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, HorseArmorItem name, float red, float green, float blue, @Nullable String overlay) {
-        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(this.getHorseArmorTexture(name, overlay)));
-        ((HorseArmorFeatureRendererAccessor)this).getModel().render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue, 1.0F);
+        ((HorseArmorFeatureRendererAccessor)this).getModel().render(matrices, vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(this.getHorseArmorTexture(name, overlay))), light, OverlayTexture.DEFAULT_UV, red, green, blue, 1.0F);
     }
 
     private Identifier getHorseArmorTexture(HorseArmorItem name, @Nullable String overlay) {
-        String type = StringUtils.remove(String.valueOf(name.getEntityTexture()), ".png");
-        String string = type + (overlay == null ? "" : "_" + overlay) + ".png";
-        return HORSE_ARMOR_TEXTURE_CACHE.computeIfAbsent(string, Identifier::new);
+        return HORSE_ARMOR_TEXTURE_CACHE.computeIfAbsent(StringUtils.remove(String.valueOf(name.getEntityTexture()), ".png") + (overlay == null ? "" : "_" + overlay) + ".png", Identifier::new);
     }
 
 }
