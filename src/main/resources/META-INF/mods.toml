@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[41,)"
+loaderVersion = "[46,)"
 license = "GNU Lesser General Public License v3.0"
 
 [[mods]]
@@ -18,13 +18,13 @@ Properly dyed horse armor!
 [[dependencies.dyed]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19,1.20)"
+versionRange = "[1.20,1.21)"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.dyed]]
 modId = "forge"
 mandatory = true
-versionRange = "[41,)"
+versionRange = "[46,)"
 ordering = "AFTER"
 side = "CLIENT"
