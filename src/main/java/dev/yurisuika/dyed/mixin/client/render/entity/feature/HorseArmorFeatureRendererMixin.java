@@ -6,9 +6,9 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.HorseArmorFeatureRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.item.AnimalArmorItem;
-import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
@@ -35,7 +35,7 @@ public class HorseArmorFeatureRendererMixin {
                 ((HorseArmorFeatureRendererAccessor)this).getModel().animateModel(entity, limbAngle, limbDistance, tickDelta);
                 ((HorseArmorFeatureRendererAccessor)this).getModel().setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
                 if (itemStack.isIn(ItemTags.DYEABLE)) {
-                    int i = DyeableItem.getColor(itemStack);
+                    int i = DyedColorComponent.getColor(itemStack, -6265536);
                     float n = (float)(i >> 16 & 255) / 255.0F;
                     float o = (float)(i >> 8 & 255) / 255.0F;
                     float p = (float)(i & 255) / 255.0F;
