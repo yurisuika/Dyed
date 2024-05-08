@@ -1,56 +1,50 @@
 package dev.yurisuika.dyed.mixin.client.render.entity.feature;
 
-import com.google.common.collect.Maps;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.HorseArmorFeatureRenderer;
+import net.minecraft.client.render.entity.model.HorseEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.item.DyeableHorseArmorItem;
 import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Map;
-
 @Mixin(HorseArmorFeatureRenderer.class)
-public class HorseArmorFeatureRendererMixin {
+public abstract class HorseArmorFeatureRendererMixin {
 
-    private static final Map<String, Identifier> HORSE_ARMOR_TEXTURE_CACHE = Maps.newHashMap();
-
-    @Inject(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/HorseEntity;FFFFFF)V", at = @At("TAIL"))
-    public void injectRender(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, HorseEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch, CallbackInfo ci) {
+    @Inject(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/HorseEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/HorseEntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
+    private void renderDyedArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, HorseEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch, CallbackInfo ci) {
         ItemStack itemStack = entity.getArmorType();
         if (itemStack.getItem() instanceof HorseArmorItem horseArmorItem) {
             ((HorseArmorFeatureRenderer)(Object)this).getContextModel().copyStateTo((((HorseArmorFeatureRendererAccessor)this).getModel()));
             ((HorseArmorFeatureRendererAccessor)this).getModel().animateModel(entity, limbAngle, limbDistance, tickDelta);
             ((HorseArmorFeatureRendererAccessor)this).getModel().setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
             if (horseArmorItem instanceof DyeableHorseArmorItem) {
-                int i = ((DyeableHorseArmorItem)horseArmorItem).getColor(itemStack);
-                float n = (float)(i >> 16 & 255) / 255.0F;
-                float o = (float)(i >> 8 & 255) / 255.0F;
-                float p = (float)(i & 255) / 255.0F;
-                this.renderHorseArmorParts(matrices, vertexConsumers, light, horseArmorItem, n, o, p, null);
-                this.renderHorseArmorParts(matrices, vertexConsumers, light, horseArmorItem, 1.0F, 1.0F, 1.0F, "overlay");
+                int color = ((DyeableHorseArmorItem)horseArmorItem).getColor(itemStack);
+                render(matrices, vertexConsumers, light, horseArmorItem.getEntityTexture(), (float)(color >> 16 & 255) / 255.0F, (float)(color >> 8 & 255) / 255.0F, (float)(color & 255) / 255.0F);
+                render(matrices, vertexConsumers, light, Identifier.tryParse(horseArmorItem.getEntityTexture().toString().replace(".png", "_overlay.png")), 1.0F, 1.0F, 1.0F);
             } else {
-                this.renderHorseArmorParts(matrices, vertexConsumers, light, horseArmorItem, 1.0F, 1.0F, 1.0F, null);
+                render(matrices, vertexConsumers, light, horseArmorItem.getEntityTexture(), 1.0F, 1.0F, 1.0F);
             }
         }
     }
 
-    private void renderHorseArmorParts(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, HorseArmorItem name, float red, float green, float blue, @Nullable String overlay) {
-        ((HorseArmorFeatureRendererAccessor)this).getModel().render(matrices, vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(this.getHorseArmorTexture(name, overlay))), light, OverlayTexture.DEFAULT_UV, red, green, blue, 1.0F);
-    }
+    @Redirect(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/HorseEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/HorseEntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
+    private void removeVanillaRender(HorseEntityModel instance, MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {}
 
-    private Identifier getHorseArmorTexture(HorseArmorItem name, @Nullable String overlay) {
-        return HORSE_ARMOR_TEXTURE_CACHE.computeIfAbsent(StringUtils.remove(String.valueOf(name.getEntityTexture()), ".png") + (overlay == null ? "" : "_" + overlay) + ".png", Identifier::new);
+    @Unique
+    private void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, Identifier identifier, float red, float green, float blue) {
+        ((HorseArmorFeatureRendererAccessor)this).getModel().render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(identifier)), light, OverlayTexture.DEFAULT_UV, red, green, blue, 1.0F);
     }
 
 }
