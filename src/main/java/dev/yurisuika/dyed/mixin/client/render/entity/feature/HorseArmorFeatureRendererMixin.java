@@ -1,6 +1,5 @@
 package dev.yurisuika.dyed.mixin.client.render.entity.feature;
 
-import com.google.common.collect.Maps;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -14,52 +13,41 @@ import net.minecraft.item.AnimalArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
-import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Map;
-
 @Mixin(HorseArmorFeatureRenderer.class)
-public class HorseArmorFeatureRendererMixin {
-
-    private static final Map<String, Identifier> HORSE_ARMOR_TEXTURE_CACHE = Maps.newHashMap();
+public abstract class HorseArmorFeatureRendererMixin {
 
     @Inject(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/HorseEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/HorseEntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
-    public void injectRender(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, HorseEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch, CallbackInfo ci) {
+    private void renderDyedArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, HorseEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch, CallbackInfo ci) {
         ItemStack itemStack = entity.getBodyArmor();
         if (itemStack.getItem() instanceof AnimalArmorItem animalArmorItem) {
             if (animalArmorItem.getType() == AnimalArmorItem.Type.EQUESTRIAN) {
-                ((HorseArmorFeatureRenderer)(Object)this).getContextModel().copyStateTo((((HorseArmorFeatureRendererAccessor)this).getModel()));
+                ((HorseArmorFeatureRenderer)(Object)this).getContextModel().copyStateTo(((HorseArmorFeatureRendererAccessor)this).getModel());
                 ((HorseArmorFeatureRendererAccessor)this).getModel().animateModel(entity, limbAngle, limbDistance, tickDelta);
                 ((HorseArmorFeatureRendererAccessor)this).getModel().setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
                 if (itemStack.isIn(ItemTags.DYEABLE)) {
-                    int i = DyedColorComponent.getColor(itemStack, -6265536);
-                    float n = (float)(i >> 16 & 255) / 255.0F;
-                    float o = (float)(i >> 8 & 255) / 255.0F;
-                    float p = (float)(i & 255) / 255.0F;
-                    this.renderHorseArmorParts(matrices, vertexConsumers, light, animalArmorItem, n, o, p, null);
-                    this.renderHorseArmorParts(matrices, vertexConsumers, light, animalArmorItem, 1.0F, 1.0F, 1.0F, "overlay");
+                    int color = DyedColorComponent.getColor(itemStack, -6265536);
+                    render(matrices, vertexConsumers, light, animalArmorItem.getEntityTexture(), (float)(color >> 16 & 255) / 255.0F, (float)(color >> 8 & 255) / 255.0F, (float)(color & 255) / 255.0F);
+                    render(matrices, vertexConsumers, light, Identifier.tryParse(animalArmorItem.getEntityTexture().toString().replace(".png", "_overlay.png")), 1.0F, 1.0F, 1.0F);
                 } else {
-                    this.renderHorseArmorParts(matrices, vertexConsumers, light, animalArmorItem, 1.0F, 1.0F, 1.0F, null);
+                    render(matrices, vertexConsumers, light, animalArmorItem.getEntityTexture(), 1.0F, 1.0F, 1.0F);
                 }
             }
         }
     }
 
-    @Redirect(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/HorseEntity;FFFFFF)V",at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/HorseEntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
-    private void cancelRender(HorseEntityModel instance, MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {}
+    @Redirect(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/HorseEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/HorseEntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
+    private void removeVanillaRender(HorseEntityModel instance, MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {}
 
-    private void renderHorseArmorParts(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, AnimalArmorItem name, float red, float green, float blue, @Nullable String overlay) {
-        ((HorseArmorFeatureRendererAccessor)this).getModel().render(matrices, vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(this.getHorseArmorTexture(name, overlay))), light, OverlayTexture.DEFAULT_UV, red, green, blue, 1.0F);
-    }
-
-    private Identifier getHorseArmorTexture(AnimalArmorItem name, @Nullable String overlay) {
-        return HORSE_ARMOR_TEXTURE_CACHE.computeIfAbsent(StringUtils.remove(String.valueOf(name.getEntityTexture()), ".png") + (overlay == null ? "" : "_" + overlay) + ".png", Identifier::new);
+    @Unique
+    private void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, Identifier identifier, float red, float green, float blue) {
+        ((HorseArmorFeatureRendererAccessor)this).getModel().render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(identifier)), light, OverlayTexture.DEFAULT_UV, red, green, blue, 1.0F);
     }
 
 }
