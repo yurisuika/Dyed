@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[50,)"
+loaderVersion = "[1,)"
 license = "GNU Lesser General Public License v3.0"
 
 [[mods]]
@@ -15,16 +15,19 @@ description = '''
 Properly dyed horse armor!
 '''
 
+[[mixins]]
+config = "dyed.mixins.json"
+
 [[dependencies.dyed]]
 modId = "minecraft"
-mandatory = true
+type = "required"
 versionRange = "[1.20.5,1.21)"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.dyed]]
-modId = "forge"
-mandatory = true
-versionRange = "[50,)"
+modId = "neoforge"
+type = "required"
+versionRange = "[20.5,)"
 ordering = "NONE"
 side = "CLIENT"
