@@ -26,5 +26,5 @@ side = "CLIENT"
 modId = "forge"
 mandatory = true
 versionRange = "[46,)"
-ordering = "AFTER"
+ordering = "NONE"
 side = "CLIENT"
