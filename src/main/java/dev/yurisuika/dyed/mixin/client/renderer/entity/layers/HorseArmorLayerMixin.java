@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(HorseArmorLayer.class)
 public abstract class HorseArmorLayerMixin {
 
-    @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/animal/horse/Horse;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/HorseModel;renderToBuffer(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V"))
+    @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/animal/horse/Horse;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/HorseModel;renderToBuffer(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V"))
     private void renderDyedArmor(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Horse livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
         ItemStack itemStack = livingEntity.getBodyArmorItem();
         if (itemStack.getItem() instanceof AnimalArmorItem animalArmorItem) {
@@ -33,22 +33,21 @@ public abstract class HorseArmorLayerMixin {
                 ((HorseArmorLayerAccessor)this).getModel().prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
                 ((HorseArmorLayerAccessor)this).getModel().setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                 if (itemStack.is(ItemTags.DYEABLE)) {
-                    int color = DyedItemColor.getOrDefault(itemStack, -6265536);
-                    renderLayer(poseStack, buffer, packedLight, animalArmorItem.getTexture(), ARGB32.red(color) / 255.0F, ARGB32.green(color) / 255.0F, ARGB32.blue(color) / 255.0F);
-                    renderLayer(poseStack, buffer, packedLight, ResourceLocation.tryParse(animalArmorItem.getTexture().toString().replace(".png", "_overlay.png")), 1.0F, 1.0F, 1.0F);
+                    renderLayer(poseStack, buffer, packedLight, animalArmorItem.getTexture(), ARGB32.opaque(DyedItemColor.getOrDefault(itemStack, -6265536)));
+                    renderLayer(poseStack, buffer, packedLight, ResourceLocation.tryParse(animalArmorItem.getTexture().toString().replace(".png", "_overlay.png")), -1);
                 } else {
-                    renderLayer(poseStack, buffer, packedLight, animalArmorItem.getTexture(), 1.0F, 1.0F, 1.0F);
+                    renderLayer(poseStack, buffer, packedLight, animalArmorItem.getTexture(), -1);
                 }
             }
         }
     }
 
-    @Redirect(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/animal/horse/Horse;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/HorseModel;renderToBuffer(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V"))
-    private void removeVanillaRender(HorseModel<Horse> renderer, PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {}
+    @Redirect(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/animal/horse/Horse;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/HorseModel;renderToBuffer(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V"))
+    private void removeVanillaRender(HorseModel<Horse> renderer, PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {}
 
     @Unique
-    private void renderLayer(PoseStack poseStack, MultiBufferSource buffer, int packedLight, ResourceLocation resourceLocation, float red, float green, float blue) {
-        ((HorseArmorLayerAccessor)this).getModel().renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutoutNoCull(resourceLocation)), packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
+    private void renderLayer(PoseStack poseStack, MultiBufferSource buffer, int packedLight, ResourceLocation resourceLocation, int color) {
+        ((HorseArmorLayerAccessor)this).getModel().renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutoutNoCull(resourceLocation)), packedLight, OverlayTexture.NO_OVERLAY, color);
     }
 
 }
