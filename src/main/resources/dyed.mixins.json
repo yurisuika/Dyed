@@ -7,7 +7,6 @@
   "mixins": [
   ],
   "client": [
-    "client.renderer.entity.layers.EquipmentLayerRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
