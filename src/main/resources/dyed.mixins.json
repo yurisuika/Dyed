@@ -7,8 +7,7 @@
   "mixins": [
   ],
   "client": [
-    "client.renderer.entity.layers.HorseArmorLayerAccessor",
-    "client.renderer.entity.layers.HorseArmorLayerMixin"
+    "client.renderer.entity.layers.EquipmentLayerRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
