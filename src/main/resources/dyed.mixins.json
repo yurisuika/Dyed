@@ -3,12 +3,11 @@
   "minVersion": "0.8",
   "package": "dev.yurisuika.dyed.mixin",
   "refmap": "dyed.refmap.json",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "world.item.equipment.EquipmentModelsMixin"
   ],
   "client": [
-    "client.renderer.entity.layers.HorseArmorLayerAccessor",
-    "client.renderer.entity.layers.HorseArmorLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
