@@ -21,7 +21,7 @@ config = "dyed.mixins.json"
 [[dependencies.dyed]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.2,)"
+versionRange = "[1.21.2,1.21.3]"
 ordering = "NONE"
 side = "CLIENT"
 
