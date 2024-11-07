@@ -5,9 +5,11 @@
   "refmap": "dyed.refmap.json",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "world.item.equipment.EquipmentModelsMixin"
   ],
   "client": [
+    "client.data.models.ItemModelGeneratorsAccessor",
+    "client.data.models.ItemModelGeneratorsInvoker",
+    "client.data.models.ItemModelGeneratorsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
