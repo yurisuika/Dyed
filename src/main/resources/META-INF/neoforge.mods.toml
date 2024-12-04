@@ -21,13 +21,13 @@ config = "dyed.mixins.json"
 [[dependencies.dyed]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.2,1.21.3]"
+versionRange = "[1.21.4,)"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.dyed]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.2,)"
+versionRange = "[21.4,)"
 ordering = "NONE"
 side = "CLIENT"
