@@ -2,8 +2,14 @@ package dev.yurisuika.dyed;
 
 import net.minecraftforge.fml.common.Mod;
 
-@Mod("dyed")
 public class Dyed {
+
+    @Mod("dyed")
+    public static class Client {
+
+        public Client() {}
+
+    }
 
     public Dyed() {}
 
