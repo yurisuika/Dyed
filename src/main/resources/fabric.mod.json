@@ -21,8 +21,6 @@
 
   "environment": "client",
   "entrypoints": {
-    "main": [
-    ]
   },
   "mixins": [
     "dyed.mixins.json"
