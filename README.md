@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/yurisuika/Dyed/blob/Fabric-1.18.x/src/main/resources/assets/dyed/icon.png?raw=true" width="256" height="256"></p>
+<p align="center"><img src="https://github.com/yurisuika/Dyed/blob/Fabric-1.18.2/src/main/resources/assets/dyed/icon.png?raw=true" width="256" height="256"></p>
 
 **Dyed** is a Fabric/Forge mod that fixes the dyeing of leather horse armor! Have you ever noticed that something was not quite right about horses in Minecraft? No, not that they do not drop that delicious horse meat, but rather that their leather horse armor gets fully dyed, even the colored parts! Unlike the player armor, which has an overlay texture that is not tinted, the horse armor has no provision for such an overlay layer. Despite the texture appearing half designed to be properly dyeable (it looks like a dyeable layer and overlay layer were just flattened into one image), the horse armor just wasn't coded to have it be so. Now you can have leather horse armor with that overlay!
 
