@@ -8,7 +8,6 @@
   ],
   "client": [
     "client.data.models.ItemModelGeneratorsAccessor",
-    "client.data.models.ItemModelGeneratorsInvoker",
     "client.data.models.ItemModelGeneratorsMixin"
   ],
   "injectors": {
