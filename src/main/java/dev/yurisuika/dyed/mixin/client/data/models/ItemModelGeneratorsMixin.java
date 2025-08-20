@@ -17,18 +17,18 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class ItemModelGeneratorsMixin {
 
     @Redirect(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/data/models/ItemModelGenerators;generateDyedItem(Lnet/minecraft/world/item/Item;I)V"))
-    private void redirectLeatherHorseArmor(ItemModelGenerators itemModelGenerators, Item item, int i) {
-        generateHorseArmor(item, i);
+    private void redirectLeatherHorseArmor(ItemModelGenerators itemModelGenerators, Item item, int color) {
+        generateHorseArmor(item, color);
     }
 
     @Unique
-    private void generateHorseArmor(Item item, int i) {
+    private void generateHorseArmor(Item item, int color) {
         ResourceLocation resourceLocationModel = TextureMapping.getItemTexture(item);
         ResourceLocation resourceLocationModelOverlay = TextureMapping.getItemTexture(item, "_overlay");
         ResourceLocation resourceLocationItem = ModelLocationUtils.getModelLocation(item, "_dyed");
         ResourceLocation resourceLocationItemOverlay = ModelTemplates.FLAT_ITEM.create(item, TextureMapping.layer0(resourceLocationModel), ((ItemModelGeneratorsAccessor) this).getModelOutput());
         ModelTemplates.TWO_LAYERED_ITEM.create(resourceLocationItem, TextureMapping.layered(resourceLocationModel, resourceLocationModelOverlay), ((ItemModelGeneratorsAccessor) this).getModelOutput());
-        ((ItemModelGeneratorsAccessor) this).getItemModelOutput().accept(item, ItemModelUtils.composite(ItemModelUtils.plainModel(resourceLocationItem), ItemModelUtils.tintedModel(resourceLocationItemOverlay, ItemModelUtils.constantTint(-1), new Dye(i))));
+        ((ItemModelGeneratorsAccessor) this).getItemModelOutput().accept(item, ItemModelUtils.composite(ItemModelUtils.plainModel(resourceLocationItem), ItemModelUtils.tintedModel(resourceLocationItemOverlay, ItemModelUtils.constantTint(-1), new Dye(color))));
     }
 
 }
