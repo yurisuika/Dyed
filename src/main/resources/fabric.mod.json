@@ -21,6 +21,9 @@
 
   "environment": "client",
   "entrypoints": {
+    "client": [
+      "dev.yurisuika.dyed.Dyed\$Client"
+    ]
   },
   "mixins": [
     "dyed.mixins.json"
