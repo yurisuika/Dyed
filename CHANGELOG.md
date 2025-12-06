@@ -1,0 +1,1 @@
+- Added the base texture of leather horse armor from 1.21.11 to match texture styling.

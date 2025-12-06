@@ -1,0 +1,33 @@
+package dev.yurisuika.dyed.mixin.minecraft.client.data.models;
+
+import net.minecraft.client.color.item.Dye;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.model.ItemModelUtils;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
+
+@Mixin(ItemModelGenerators.class)
+public abstract class ItemModelGeneratorsMixin {
+
+    @Redirect(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/data/models/ItemModelGenerators;generateDyedItem(Lnet/minecraft/world/item/Item;I)V"))
+    private void redirectLeatherHorseArmor(ItemModelGenerators itemModelGenerators, Item item, int color) {
+        generateHorseArmor(item, color);
+    }
+
+    @Unique
+    private void generateHorseArmor(Item item, int color) {
+        ResourceLocation resourceLocationModel = TextureMapping.getItemTexture(item);
+        ResourceLocation resourceLocationModelOverlay = TextureMapping.getItemTexture(item, "_overlay");
+        ResourceLocation resourceLocationItem = ModelLocationUtils.getModelLocation(item);
+        ModelTemplates.TWO_LAYERED_ITEM.create(resourceLocationItem, TextureMapping.layered(resourceLocationModel, resourceLocationModelOverlay), ((ItemModelGeneratorsAccessor) this).getModelOutput());
+        ((ItemModelGeneratorsAccessor) this).getItemModelOutput().accept(item, ItemModelUtils.tintedModel(resourceLocationItem, ItemModelUtils.constantTint(-1), new Dye(color)));
+    }
+
+}
