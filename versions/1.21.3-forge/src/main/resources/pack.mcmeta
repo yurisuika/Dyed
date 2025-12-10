@@ -2,6 +2,6 @@
     "pack": {
         "description": "Dyed",
         "pack_format": 42,
-        "supported_formats": [35, 42]
+        "supported_formats": [35, 43]
     }
 }
