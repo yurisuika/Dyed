@@ -9,7 +9,7 @@ Originally an exclusive feature of Pocket Edition, when ported to Java Edition t
 ### Give your horses some love!
 Dyed cleaves the leather horse armor texture in two once again and fixes the model code to dye only the base texture! The item model for the leather horse armor is also replaced to fix the dyeing for the item as well!
 
-Please note that this bug has finally been fixed in Minecraft 1.21.11, so while Dyed will still work, it is now unnecessary! It will no longer be marked as compatible starting with 1.21.11 Pre-Release 1.
+Please note that this bug has finally been fixed in Minecraft 1.21.11, so while Dyed will still work, it is now unnecessary! It will no longer be marked as compatible starting with 1.21.11.
 
 ### Get the goods!
 You can find releases of Dyed on both *[Modrinth]* and *[CurseForge]* and also access development builds on *[GitHub]*!
