@@ -6,7 +6,8 @@ import org.apache.logging.log4j.Logger;
 
 public class Dyed implements ModInitializer {
 
-    public static final Logger LOGGER = LogManager.getLogger("dyed");
+    public static final String MOD_ID = "dyed";
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     @Override
     public void onInitialize() {

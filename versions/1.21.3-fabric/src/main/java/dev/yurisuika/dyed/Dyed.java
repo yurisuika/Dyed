@@ -6,7 +6,8 @@ import org.slf4j.LoggerFactory;
 
 public class Dyed implements ModInitializer {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger("dyed");
+    public static final String MOD_ID = "dyed";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     @Override
     public void onInitialize() {
