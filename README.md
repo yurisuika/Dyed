@@ -19,11 +19,12 @@ Dyed supports Fabric 1.16+, Forge 1.16+, and NeoForge 1.20.2+.
 ### Figure it all out!
 You can delve into the *[wiki]* for details or submit a *[bug report]* if something isn't quite right!
 
-Still need help? Drop into the *[Discord]* for quick support.
+Still need something? Head on over to the *[discussions]* forum for support, to read announcements, or discuss anything about the mod!
 
 [Modrinth]: https://modrinth.com/mod/dyed
 [CurseForge]: https://www.curseforge.com/minecraft/mc-mods/dyed
 [GitHub]: https://github.com/yurisuika/dyed
 [wiki]: https://github.com/yurisuika/dyed/wiki
 [bug report]: https://github.com/yurisuika/dyed/issues
+[discussions]: https://github.com/yurisuika/dyed/discussions
 [Discord]: https://discord.gg/0zdNEkQle7Qg9C1H
