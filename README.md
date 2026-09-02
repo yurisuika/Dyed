@@ -1,4 +1,6 @@
-*Dye leather horse armor only where it is meant to be dyed!*
+# DYED
+#### *Dye leather horse armor only where it is meant to be dyed!*
+![Dyed](https://raw.githubusercontent.com/yurisuika/Dyed/refs/heads/assets/dyed.png)
 
 ### Something isn't quite right!
 Has suiting up your prized horse in leather horse armor ever caught your eye as queer? Something is dreadfully off with leather horse armor in Minecraft. Unlike the player armor, the colored details of leather horse armor get dyed! Dyed fixes this mistake so your horses can wear their leather armor with pride!
