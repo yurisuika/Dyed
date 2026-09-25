@@ -28,7 +28,7 @@
     "dyed.mixins.json"
   ],
 
-  "accessWidener": "dyed.accesswidener",
+  "accessWidener": "dyed.classtweaker",
 
   "depends": {
     "fabricloader": "${loader_version_range}",
